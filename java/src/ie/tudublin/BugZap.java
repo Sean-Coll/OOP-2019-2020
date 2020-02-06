@@ -31,10 +31,13 @@ public class BugZap extends PApplet
 	float playerSpeed = 5;
 	float playerWidth = 40;
 	float halfPlayerWidth = playerWidth / 2;
-	
+	float bulletX = playerX; 
+	float bulletY = playerY;
 
 	float bugX, bugY, bugWidth = 30;
 	float halfBugWidth = bugWidth / 2;
+
+	Boolean bulletFire = false;
 
 	void reset()
 	{
@@ -109,25 +112,43 @@ public class BugZap extends PApplet
 		}
 		if (key == ' ')
 		{
-			line(playerX, playerY, playerX, bugY);
+			// line(playerX, playerY, playerX, bugY);
+			if (bulletFire == false)
+			{
+				bulletX = playerX; 
+				bulletY = playerY;
+				bulletFire = true;
+			}
 		}
 	}	
 
 	void moveBug()
 	{
-		if ((frameCount % 60) == 0)
+		bugX = bugX + 2;
+		if (bugX > (width + bugWidth))
 		{
-			bugX += random(-5, +5);
-			if (bugX < halfBugWidth )
-			{
-			  bugX = halfBugWidth;
-			}
-			
-			if (bugX + halfBugWidth > width)
-			{
-			  bugX = width - halfBugWidth;
-			}
-			bugY ++;
+		  bugX = -10;
+		}
+	}
+
+	void hitDetect()
+	{
+
+	}
+
+	void drawBullet()
+	{
+		bulletY = bulletY - 3;
+		rect(bulletX, bulletY, 10, 10);
+		textSize(40);
+		if((bulletX >= bugX - halfBugWidth && bulletX <= bugX + halfBugWidth) && (bulletY >= bugY && bulletY <= bugY + 7))
+		{
+			text("Hit!", 300, 300);
+			bulletFire = false;
+		}
+		if (bulletY < bugY - 30)
+		{
+			bulletFire = false;
 		}
 	}
 
@@ -138,5 +159,9 @@ public class BugZap extends PApplet
 		drawPlayer(playerX, playerY, playerWidth);
 		drawBug(bugX, bugY);
 		moveBug();
+		if (bulletFire == true)
+		{
+			drawBullet();
+		}
 	}
 }
