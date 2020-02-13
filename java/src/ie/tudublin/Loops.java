@@ -48,7 +48,8 @@ public class Loops extends PApplet
 		// drawLinePattern();
 		// drawPlainCircles();
 		// drawRainbowRects();
-		drawGrid();
+		// drawGrid();
+		drawRects();
 	}
 
 	public void drawLinePattern()
@@ -134,5 +135,26 @@ public class Loops extends PApplet
 		}
 	}
 
+	public void drawRects()
+	{
+		background(125);
+		stroke(0);
+		fill(255);
+		float rectX = 125;
+		float rectY = 125;
+		float rectW = 150;
+		float rectH = 40;
+		
+		int i = 0;
+
+		for(i = 0; i <= 5; i++)
+		{
+			rect(rectX, rectY, rectW, rectH);
+
+			rectY = rectY + rectH; //Move down
+			rectX += 12.5; //Move Right
+			rectW -= 25; //Shorten rectangles
+		}
+	}
 
 }
