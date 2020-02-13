@@ -49,7 +49,9 @@ public class Loops extends PApplet
 		// drawPlainCircles();
 		// drawRainbowRects();
 		// drawGrid();
-		drawRects();
+		// drawRects();
+		// drawRainbowCircles();
+		drawCheckered();
 	}
 
 	public void drawLinePattern()
@@ -154,6 +156,97 @@ public class Loops extends PApplet
 			rectY = rectY + rectH; //Move down
 			rectX += 12.5; //Move Right
 			rectW -= 25; //Shorten rectangles
+		}
+	}
+
+	public void drawRainbowCircles()
+	{
+		background(255);
+		noStroke();
+		float elipX = 25;
+		float elipY = 25;
+		float elipW = 50;
+		float elipH = 50;
+		float hue_val = 0;
+		float sat_val = 255;
+		float bright_val = 255;
+
+		int i = 0;
+		int j = 0;
+
+		for (i = 0; i <= 10; i++) //Draw row
+		{
+			fill(hue_val, sat_val, bright_val);
+			ellipse(elipX, elipY, elipW, elipH);
+			for(j = 0; j <= 10; j++) //Draw column
+			{
+				elipY += 50;
+				hue_val += 10;
+				fill(hue_val, sat_val, bright_val);
+				ellipse(elipX, elipY, elipW, elipH);
+			}
+			elipY = 25;
+			elipX += 50;
+			hue_val -= 100;
+		}
+
+
+	}
+
+	public void drawCheckered()
+	{
+		background(0);
+		noStroke();
+		float squareX = 0;
+		float squareY = 0;
+		float squareW = 25;
+		float squareH = 25;
+		float hue_val = 175;
+		float sat_val = 255;
+		float bright_val = 255;
+
+		int i = 0;
+		int j = 0;
+
+		for(i = 0; i <= 20; i++) //Draw row
+		{
+			if((i % 2) == 0)
+			{
+				bright_val = 125;
+			}
+			else
+			{
+				bright_val = 250;
+			}
+			fill(hue_val, sat_val, bright_val);
+			rect(squareX, squareY, squareW, squareH);
+			for(j = 0; j <= 10; j++) //Draw columns
+			{
+				if((i % 2) == 0)
+				{
+					bright_val = 250;
+				}
+				else
+				{
+					bright_val = 125;
+				}
+				squareY += 25;
+				fill(hue_val, sat_val, bright_val);
+				rect(squareX, squareY, squareW, squareH);
+				squareY += 25;
+				if((i % 2) == 0)
+				{
+					bright_val = 125;
+				}
+				else
+				{
+					bright_val = 250;
+				}
+				fill(hue_val, sat_val, bright_val);
+				rect(squareX, squareY, squareW, squareH);
+			}
+			squareY = 0;
+			squareX += 25;
 		}
 	}
 
