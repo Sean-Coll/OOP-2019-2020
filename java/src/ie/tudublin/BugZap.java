@@ -33,11 +33,14 @@ public class BugZap extends PApplet
 	float halfPlayerWidth = playerWidth / 2;
 	float bulletX = playerX; 
 	float bulletY = playerY;
+	int score = 0;
+	int time = 60;
 
 	float bugX, bugY, bugWidth = 30;
 	float halfBugWidth = bugWidth / 2;
 
 	Boolean bulletFire = false;
+	Boolean gameOver = false;
 
 	void reset()
 	{
@@ -133,7 +136,61 @@ public class BugZap extends PApplet
 
 	void hitDetect()
 	{
+		score += 100;
+		bugX = 30;
+		bugY = 30;
+		drawBug(bugX, bugY);//Reset bug position
+		bulletFire = false;
+	}
 
+	void drawScore()
+	{
+		if(gameOver == false)
+		{
+			float scoreX = 10;
+		float scoreY = 480;
+
+		textSize(12);
+		fill(255);
+
+		text("SCORE", scoreX, scoreY);
+		text(score, scoreX, scoreY + 10);
+		}
+	}
+
+	void drawTime()
+	{
+		float timeX = 465;
+		float timeY = 480;
+
+		textSize(12);
+		fill(255);
+
+		text("TIME", timeX, timeY);
+		text(time, timeX, timeY + 10);
+
+		if(frameCount % 60 == 0)
+		{
+			time--;
+		}
+
+		if(time <= 0)
+		{
+			endGame();
+		}
+	}
+
+	void endGame()
+	{
+		background(0);
+		fill(255);
+		float messageX = 200;
+		float messageY = 200;
+
+		String message = "Game Over\nFinal score: " + score;
+		textSize(20);
+		text(message, messageX, messageY);
+		gameOver = true;
 	}
 
 	void drawBullet()
@@ -143,8 +200,7 @@ public class BugZap extends PApplet
 		textSize(40);
 		if((bulletX >= bugX - halfBugWidth && bulletX <= bugX + halfBugWidth) && (bulletY >= bugY && bulletY <= bugY + 7))
 		{
-			text("Hit!", 300, 300);
-			bulletFire = false;
+			hitDetect();
 		}
 		if (bulletY < bugY - 30)
 		{
@@ -163,5 +219,7 @@ public class BugZap extends PApplet
 		{
 			drawBullet();
 		}
+		drawTime();
+		drawScore();
 	}
 }
