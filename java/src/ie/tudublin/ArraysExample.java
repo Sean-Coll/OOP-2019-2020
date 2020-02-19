@@ -76,6 +76,78 @@ public class ArraysExample extends PApplet
 		}
 	}
 
+	void drawLineGraph()
+	{
+		stroke(255);
+		textSize(12);
+		colorMode(HSB);
+		float topX = 40;
+		float topY = 20;
+
+		float sideLineX = 35;
+		float sideLineY = 20;
+		float sidelineGap = 28;
+
+		float baseLineX = 40;
+		float baseLineY = 440;
+		float baseLineEndX = 470;
+
+		float bottomLineX = 40;
+		float bottomLineY = 440;
+		float bottomLineH = 5;
+		float bottomLineGap = 39.0909090909090f;
+
+		int sideTextVal = 150;
+		float sideTextX = 30;
+		float sideTextY = 22;
+
+		float bottomTextX = 40;
+		float bottomTextY = 470;
+
+		float trendLineX = 40;
+		float trendLineY = 0;
+		float trendLineY2 = 0;
+
+		float graphMin = 0;
+		float graphMax = 150;
+
+
+		line(topX, topY, baseLineX, baseLineY);
+		line(baseLineX, baseLineY, baseLineEndX, baseLineY);
+
+		textAlign(RIGHT);
+		//SideLines and Y values
+		for(int i = 0; i <= 15; i ++)
+		{
+			line(sideLineX, sideLineY, topX, sideLineY);
+			text(sideTextVal, sideTextX, sideTextY);
+
+			sideLineY += sidelineGap;
+			sideTextY += sidelineGap;
+			sideTextVal -= 10;
+		}
+
+		textAlign(CENTER);
+		//BottomLines and Months
+		for(int j = 0; j < months.length; j++)
+		{
+			line(bottomLineX, bottomLineY, bottomLineX, bottomLineY + bottomLineH);
+			text(months[j], bottomTextX, bottomTextY);
+
+			bottomLineX += bottomLineGap;
+			bottomTextX += bottomLineGap;
+		}
+		stroke(130,255,255);
+		//TrendLine
+		for(int k = 0; k < months.length - 1; k++)
+		{
+			trendLineY = map(rainFall[k], graphMin, graphMax, baseLineY, topY);
+			trendLineY2 = map(rainFall[k+1], graphMin, graphMax, baseLineY, topY);
+			line(trendLineX, trendLineY, trendLineX + bottomLineGap, trendLineY2);
+			trendLineX += bottomLineGap;
+		}
+	}
+
 	public void keyPressed()
 	{
 		if (key == ' ')
@@ -89,6 +161,7 @@ public class ArraysExample extends PApplet
 		background(0);		
 		colorMode(HSB);	
 
-		drawBarChart();
+		//drawBarChart();
+		drawLineGraph();
 	}
 }
