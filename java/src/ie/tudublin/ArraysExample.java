@@ -148,6 +148,76 @@ public class ArraysExample extends PApplet
 		}
 	}
 
+	
+	//Bryan's solution
+	void drawLineGraph2()
+	{
+		float border = width *0.1f;
+		line(border, border, border, height - border);
+		textAlign(CENTER, CENTER);
+		fill(255);
+		stroke(255);
+		for(int ya = 0; ya <= 150; ya += 10)
+		{
+			float y = map(ya, 0, 150, height - border, border);
+			line(border, y, border - 5, y);
+			text(ya, border / 2, y);
+			
+		}
+		line(border, height - border, width - border, height - border);
+		for(int i = 0; i < months.length; i++)
+		{
+			float x = map(i, 0, months.length - 1, border, width - border);
+			line(x, height - border, x, height - border + 5);
+			text(months[i], x, height - border / 2);
+		}
+
+		for(int i = 0; i < rainFall.length - 1; i++)
+		{
+			float x1 = map(i, 0, months.length - 1, border, width - border);
+			float x2 = map(i + 1, 0, months.length - 1, border, width - border);
+
+			float y1 = map(rainFall[i], 0, 150, height - border, border);
+			float y2 = map(rainFall[i+1], 0, 150, height - border, border);
+
+			line(x1, y1, x2, y2);
+		}
+	}
+
+	void drawPieChart()
+	{
+		float centerX = width / 2;
+		float centerY = height / 2;
+		float arcW = 400;
+
+		float arrayTotal = 0.0f;
+		float arrayMax = 104;
+
+		float totalAng = 0;
+
+		float hue_val = 0;
+		colorMode(HSB);
+
+		stroke(0);
+
+		// arc(centerX, centerY, 100, 100, PI, PI * 1.5f);
+		for(int j = 0; j < rainFall.length; j++)
+		{
+			arrayTotal += rainFall[j];
+		}
+
+		for(int i = 0; i < rainFall.length; i++)
+		{
+			float ang1 = map(totalAng, 0, arrayTotal, 0, TWO_PI);
+			float ang2 = map(rainFall[i] + totalAng, 0, arrayTotal, 0, TWO_PI);
+			fill(hue_val, 255, 255);
+			arc(centerX, centerY, arcW, arcW, ang1, ang2, PIE);
+			totalAng += rainFall[i];
+			hue_val += 255 / rainFall.length - 1;
+		}
+	}
+	
+
 	public void keyPressed()
 	{
 		if (key == ' ')
@@ -162,6 +232,8 @@ public class ArraysExample extends PApplet
 		colorMode(HSB);	
 
 		//drawBarChart();
-		drawLineGraph();
+		// drawLineGraph();
+		// drawLineGraph2();
+		drawPieChart();
 	}
 }
