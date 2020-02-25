@@ -3,6 +3,7 @@ package ie.tudublin;
 import processing.core.PApplet;
 import ddf.minim.*;
 import ddf.minim.analysis.*;
+import javafx.scene.shape.Polygon;
 
 public class Sound1 extends PApplet
 {	
@@ -67,22 +68,50 @@ public class Sound1 extends PApplet
 		// ellipse(200, lerpedcircleY, 50, 50);	
 	}
 
+	void drawLines()
+	{
+		background(0);		
+		stroke(255);
+		float cy = height / 2;
+		
+		for(int i = 0 ; i < as.bufferSize() ; i ++)
+		{
+			stroke(
+				map(i, 0, as.bufferSize(), 0, 255)
+				, 255
+				, 255
+			);
+			line(i, 0, i, 0 + abs(as.left.get(i) * cy));
+			line(i, 500, i, 500 - abs(as.left.get(i) * cy));
+		}
+	}
+
+	void drawPolygon()
+	{
+		background(0);		
+		stroke(255);
+
+		float cx = width / 2;
+		float cy = height / 2;
+		float vertices = 5;
+		float radius = 200;
+		float length = radius / vertices;
+
+		//Try to draw a Pentagon
+		beginShape();
+		vertex(250, 200);
+		vertex(300, 250);
+		vertex(275, 300);
+		vertex(225, 300);
+		vertex(200, 250);
+		endShape(CLOSE);
+	}	
+
 	
 	public void draw()
 	{	
-		// background(0);		
-		// stroke(255);
-		// float cy = height / 2;
-		
-		// for(int i = 0 ; i < ai.bufferSize() ; i ++)
-		// {
-		// 	stroke(
-		// 		map(i, 0, ai.bufferSize(), 0, 255)
-		// 		, 255
-		// 		, 255
-		// 	);
-		// 	line(i, cy, i, cy + ai.left.get(i) * cy);
-		// }
-		drawCircle();
+		// drawLines();
+		// drawCircle();
+		drawPolygon();
 	}
 }
