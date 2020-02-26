@@ -10,6 +10,11 @@ public class Sound2 extends PApplet
 
 	int frameSize = 1024;
 
+
+
+	float[] frequencies = {293.66f, 329.63f, 369.99f, 392.00f, 440.00f, 493.88f, 554.37f, 587.33f, 659.25f, 739.99f, 783.99f, 880.00f, 987.77f, 1108.73f, 1174.66f};
+	String[] spellings = {"D,", "E,", "F,", "G,", "A,", "B,", "C", "D", "E", "F", "G", "A", "B","c", "d", "e", "f", "g", "a", "b", "c'", "d'", "e'", "f'", "g'", "a'", "b'", "c''", "d''"};
+
 	public void settings()
 	{
 		size(1024, 500);
@@ -21,6 +26,7 @@ public class Sound2 extends PApplet
 		minim = new Minim(this);
 		as = minim.loadSample("scale.wav", frameSize);
 		colorMode(HSB);
+		textSize(24);
 	}
 
 	float lerpedw = 0;
@@ -29,6 +35,20 @@ public class Sound2 extends PApplet
 	{
 		as.stop();
 		as.trigger();
+	}
+
+	public int countZeroCrossing()
+	{
+		int count = 0;
+
+		for(int i = 0; i < as.bufferSize() - 1; i++)
+		{
+			if(as.left.get(i) < 0 && as.left.get(i + 1) > 0)
+			{
+				count ++;
+			}
+		}
+		return count;
 	}
 	
 	public void draw()
@@ -58,6 +78,31 @@ public class Sound2 extends PApplet
 			, 255
 		);
 		ellipse(400 , cy,w, w);
-		ellipse(600 , cy,lerpedw, lerpedw);		
-}
+		ellipse(600 , cy,lerpedw, lerpedw);
+		
+		float zeroC = countZeroCrossing() * (1 / 0.023f);
+		text(zeroC, 25, 25);
+		String note = " ";
+
+		for(int i = 0; i < frequencies.length - 1; i++)
+		{
+			float difference = frequencies[i + 1] - frequencies[i];
+			if(zeroC > frequencies[i] && zeroC < frequencies[i+1])
+			{
+				if(zeroC >= frequencies[i] + (difference / 2))
+				{
+					note = spellings[i+1];
+				}
+				else if(zeroC <= frequencies[i] + (difference / 2))
+				{
+					note = spellings[i];
+				}
+			}
+			if(zeroC < frequencies[0])
+			{
+				note = spellings[0];
+			}
+			text(note, 32, 75);
+		}
+	}
 }
