@@ -41,14 +41,38 @@ public class Sound2 extends PApplet
 	{
 		int count = 0;
 
-		for(int i = 0; i < as.bufferSize() - 1; i++)
+		for(int i = 1; i < as.bufferSize(); i++)
 		{
-			if(as.left.get(i) < 0 && as.left.get(i + 1) > 0)
+			if(as.left.get(i-1) > 0 && as.left.get(i) <= 0)
 			{
 				count ++;
 			}
 		}
 		return count;
+	}
+
+	public void drawCircleLines()
+	{
+		float cx = width / 2;
+		float cy = height / 2;
+		float theta = 0;
+
+		for(int i = 0; i < as.bufferSize(); i++)
+		{
+			stroke(
+				map(i, 0, as.bufferSize(), 0, 255)
+				, 255
+				, 255
+			);
+			float radius = as.left.get(i);
+			theta += TWO_PI / (float) as.bufferSize();
+
+			float x = (sin(theta)) * radius * cy + cx;
+			float y = (cos(theta)) * radius * cy + cy;
+
+			line(cx, cy, x, y);
+		}
+
 	}
 	
 	public void draw()
@@ -71,14 +95,14 @@ public class Sound2 extends PApplet
 
 		float w  = average * 1000;
 		lerpedw = lerp(lerpedw, w, 0.1f);
-		noStroke();
+		// noStroke();
 		fill(
 			map(average, 0, 1, 0, 255)
 			, 255
 			, 255
 		);
-		ellipse(400 , cy,w, w);
-		ellipse(600 , cy,lerpedw, lerpedw);
+		// ellipse(400 , cy,w, w);
+		// ellipse(600 , cy,lerpedw, lerpedw);
 		
 		float zeroC = countZeroCrossing() * (1 / 0.023f);
 		text(zeroC, 25, 25);
@@ -104,5 +128,7 @@ public class Sound2 extends PApplet
 			}
 			text(note, 32, 75);
 		}
+
+		drawCircleLines();
 	}
 }
