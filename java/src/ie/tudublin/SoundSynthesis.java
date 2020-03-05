@@ -34,7 +34,7 @@ public class SoundSynthesis extends PApplet
     public void keyPressed() {
         if (key == ' ')
         {
-            wave.setFrequency(wave.frequency.getLastValue() + 100);
+            // wave.setFrequency(wave.frequency.getLastValue() + 100);
         }
         println(wave.frequency.getLastValue());
     }
@@ -46,18 +46,13 @@ public class SoundSynthesis extends PApplet
         //wave.setFrequency(random(60, 2000));
         float n = noise(offset);
         float n2 = noise(offset);
-        if(frameCount % 2 == 0)
-        {
-            wave.setFrequency(
-            map(n, 0, 1, 100, 400)
+        wave.setFrequency(
+            map(n, 0, 1, 0, 400)
         );
-        }
-        if(frameCount % 2 == 1)
-        {
-            wave2.setFrequency(
-            map(n2, 0, 1, 401, 1000)
+        
+        wave2.setFrequency(
+            map(n2, 0, 1, 14000, 16000)
         );
-        }
         
         offset += 0.01f;
 
