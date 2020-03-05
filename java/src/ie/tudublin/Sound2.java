@@ -47,7 +47,7 @@ public class Sound2 extends PApplet
 		as.stop();
 		as.trigger();
 
-	}
+	} 
 
 	public void circleVisual()
 	{
