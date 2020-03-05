@@ -11,6 +11,7 @@ public class SoundSynthesis extends PApplet
     Minim minim;
     AudioOutput out;
     Oscil wave;
+    Oscil wave2;
 
     public void settings()
     {
@@ -20,11 +21,14 @@ public class SoundSynthesis extends PApplet
 
     public void setup()
     {
+        colorMode(HSB);
         minim = new Minim(this);
 
         out = minim.getLineOut();
         wave = new Oscil( 440, 0.5f, Waves.SQUARE );
+        wave2 = new Oscil( 440, 0.5f, Waves.SQUARE );
         wave.patch(out);
+        wave2.patch(out);
     }
 
     public void keyPressed() {
@@ -41,21 +45,32 @@ public class SoundSynthesis extends PApplet
     {
         //wave.setFrequency(random(60, 2000));
         float n = noise(offset);
-        wave.setFrequency(
-            map(n, 0, 1, 200, 600)
+        float n2 = noise(offset);
+        if(frameCount % 2 == 0)
+        {
+            wave.setFrequency(
+            map(n, 0, 1, 100, 400)
         );
+        }
+        if(frameCount % 2 == 1)
+        {
+            wave2.setFrequency(
+            map(n2, 0, 1, 401, 1000)
+        );
+        }
+        
         offset += 0.01f;
 
         float cx = width / 2;
         float cy = height / 2;
 
         background(0);
-        stroke(255);
+        stroke(map(n, 0, 1, 0, 255), 255, 255);
         noFill();
         ellipse(cx, cy, 300, 300);
-        ellipse(cx, cy, 20, 20);
-        ellipse(cx - 100, cy - 50, 20, 20);
-        ellipse(cx + 100, cy - 50, 20, 20);
+        ellipse(cx, cy + map(n, 0, 1, 0, 50), 20, 20);
+        ellipse(cx - map(n, 0, 1, 0, 100), cy - 50, 20, 20);
+        ellipse(cx + map(n, 0, 1, 0, 100), cy - 50, 20, 20);
 
         ellipse(cx, cy + 100, 100,
             map(n, 0, 1, 0, 60)
