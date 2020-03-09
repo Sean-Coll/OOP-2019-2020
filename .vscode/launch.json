@@ -58,6 +58,18 @@
             "request": "launch",
             "mainClass": "processing.core.PApplet",
             "projectName": "java"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Main",
+            "request": "launch",
+            "mainClass": "ie.dit.Main"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Main(1)",
+            "request": "launch",
+            "mainClass": "ie.tudublin.Main"
         }
     ]
 }
