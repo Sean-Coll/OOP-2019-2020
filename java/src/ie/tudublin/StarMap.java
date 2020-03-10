@@ -15,7 +15,6 @@ public class StarMap extends PApplet
     public void settings()
     {
         size(800, 800);
-
     }
 
     public void setup()
@@ -42,9 +41,47 @@ public class StarMap extends PApplet
         }
     }
 
+    public void drawGrid()
+    {
+        stroke(0,0,255);
+        fill(255);
+        
+        float border = 50;
+        float textBorder = 25;
+        float lineX = 50;
+        float lineY = 50;
+        float textX = 25;
+        float textY = 25;
+        float gridW = 750;
+        float gridH = 750;
+
+        int numLines = 10;
+        int textVal = -5;
+
+        for(int i = 0; i <= numLines; i ++)
+        {
+            lineX = map(i,0,10, border, gridW);
+            lineY = map(i,0,10, border, gridH);
+            //Horizontal Lines
+            line(border, lineY, gridW, lineY);
+            //Vertical Lines
+            line(lineX, border, lineX, gridW);
+
+            textX = map(i,0,10, border, gridW);
+            textY = map(i,0,10, border, gridH);
+            //Text
+            text(textVal, textBorder, textY);
+            text(textVal, textX, textBorder);
+            
+            textVal++;
+        }
+    }
+
     public void draw()
     {
-
+        
+        background(0);
+        drawGrid();
     }
 
 }
