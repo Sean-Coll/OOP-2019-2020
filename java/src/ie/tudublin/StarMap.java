@@ -12,9 +12,36 @@ public class StarMap extends PApplet
     // Generic
     ArrayList<Star> stars = new ArrayList<Star>(); 
 
+    public void drawStars()
+    {
+        for(Star s: stars)
+        {
+            s.render(this);
+        }
+    }
+
+    public void drawGrid()
+    {
+        float border = width * 0.05f;
+
+        stroke(0, 0, 255);
+        textAlign(CENTER, CENTER);
+        for(int i = -5 ; i <= 5 ; i ++)
+        {
+            float x = map(i, -5, 5, border, width - border);
+            line(x, border, x, height - border);
+            line(border, x, width - border, x);    
+            
+            fill(255);
+            text(i, x, border / 2);
+            text(i, border / 2, x);
+        }
+    }
+
     public void settings()
     {
         size(800, 800);
+
     }
 
     public void setup()
@@ -41,47 +68,11 @@ public class StarMap extends PApplet
         }
     }
 
-    public void drawGrid()
-    {
-        stroke(0,0,255);
-        fill(255);
-        
-        float border = 50;
-        float textBorder = 25;
-        float lineX = 50;
-        float lineY = 50;
-        float textX = 25;
-        float textY = 25;
-        float gridW = 750;
-        float gridH = 750;
-
-        int numLines = 10;
-        int textVal = -5;
-
-        for(int i = 0; i <= numLines; i ++)
-        {
-            lineX = map(i,0,10, border, gridW);
-            lineY = map(i,0,10, border, gridH);
-            //Horizontal Lines
-            line(border, lineY, gridW, lineY);
-            //Vertical Lines
-            line(lineX, border, lineX, gridW);
-
-            textX = map(i,0,10, border, gridW);
-            textY = map(i,0,10, border, gridH);
-            //Text
-            text(textVal, textBorder, textY);
-            text(textVal, textX, textBorder);
-            
-            textVal++;
-        }
-    }
-
     public void draw()
     {
-        
         background(0);
         drawGrid();
+        drawStars();
     }
 
 }
