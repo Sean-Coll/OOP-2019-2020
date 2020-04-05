@@ -82,7 +82,7 @@ public class Sound1 extends PApplet
 				, 255
 			);
 			line(i, 0, i, 0 + abs(as.left.get(i) * cy));
-			line(i, 500, i, 500 - abs(as.left.get(i) * cy));
+			line(i, height, i, height - abs(as.left.get(i) * cy));
 		}
 	}
 
@@ -110,8 +110,8 @@ public class Sound1 extends PApplet
 	
 	public void draw()
 	{	
-		// drawLines();
+		drawLines();
 		// drawCircle();
-		drawPolygon();
+		// drawPolygon();
 	}
 }
