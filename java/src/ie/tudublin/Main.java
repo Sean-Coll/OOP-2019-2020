@@ -81,12 +81,12 @@ public class Main
         // Dynamic binding
         mino.speak();
         // This wont compile!!
-        //System.out.println(mino.getNumLives());
+        // System.out.println(mino.getNumLives());
         // This is an example of a cast
         System.out.println(((Cat)mino).getNumLives());
 
         mino = new Dog("Misty");  // This will compile!
-        //topcat = new Dog("Tara"); // This wont compile!
+        // topcat = new Dog("Tara"); // This wont compile!
 
         Animal a = new Cat("a");
         Animal b = new Cat("b");
@@ -109,6 +109,6 @@ public class Main
     public static void main(String[] arg)
     {
         Main main = new Main();
-		main.sound1();        
+		main.dogsCats();        
     }
 }
